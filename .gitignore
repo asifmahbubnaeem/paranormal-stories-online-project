@@ -22,5 +22,16 @@ Thumbs.db
 *.swo
 *~
 
+# SQLite database – keep off version control (contains live production data)
+data/stories.sqlite
+data/stories.sqlite-wal
+data/stories.sqlite-shm
+
+# Timestamped backup snapshots produced by scripts/exportSqliteToJson.js
+data/backup/
+
+# Temp files from atomic JSON writes
+data/*.json.tmp
+
 # Optional: uncomment to keep local data out of version control
 # data/*.json

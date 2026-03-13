@@ -38,5 +38,17 @@
       "id": "b83cb7e0-df38-493b-b53d-2616175ea5f9"
     },
     "timestamp": "2026-03-13T14:19:23.869Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "haunted_house",
+        "strange_sound"
+      ],
+      "hasDisplayName": true,
+      "id": "b715a76a-46f2-423f-af74-5d7b92b332af"
+    },
+    "timestamp": "2026-03-13T20:16:34.943Z"
   }
 ]

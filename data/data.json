@@ -12,7 +12,7 @@
       "premonition"
     ],
     "reactions": {
-      "chilling": 12,
+      "chilling": 13,
       "terrifying": 5,
       "skeptical": 2
     }
@@ -104,5 +104,16 @@
     "title": "Ghost Rider",
     "displayName": "Asif the story-teller",
     "id": "aefa2c8d-2bde-4a60-929b-480d5b60ef22"
+  },
+  {
+    "title": "Test SQLite Story",
+    "text": "Just a test.",
+    "location": "Test City",
+    "timeStamp": "14 Mar 2026",
+    "displayName": "Tester",
+    "tags": [
+      "test"
+    ],
+    "id": "98a8c34e-9474-45ab-b398-814770ff102f"
   }
 ]
