@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse real, anonymous paranormal sightings from around the world on From the Other Side. Filter by type, location, and more.">
+  <link rel="stylesheet" href="/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frijole&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Sightings – From the Other Side</title>
+</head>
+
+<body>
+  <header>
+    <div class="top-header">
+      <img class="logo-img" src="/images/candle-logo.png" alt="site logo">
+      <nav id="main-navigation">
+        <ul role="list">
+          <li role="listitem"><a href="/">Home</a></li>
+          <li role="listitem"><a href="/sightings.html">Read</a></li>
+          <li role="listitem"><a href="/upload-sighting.html">Upload</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-header">
+      <a href="/" class="site-title-page">From the Other Side</a>
+    </div>
+  </header>
+
+  <main class="sightings">
+    <h1 class="page-title">Sightings</h1>
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="cards-container"></div>
+  </main>
+
+  <section class="newsletter-section" aria-label="Newsletter signup">
+    <p class="newsletter-eyebrow">Stay haunted</p>
+    <h2 class="newsletter-title">Get the eeriest new sightings weekly</h2>
+    <form class="newsletter-form">
+      <input type="email" class="newsletter-email" placeholder="your@email.com" aria-label="Email address" required>
+      <button type="submit" class="newsletter-btn">Join</button>
+    </form>
+    <p class="newsletter-msg"></p>
+  </section>
+
+  <footer>
+    <p>&copy; From The Other Side. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="/index.js"></script>
+  <script src="/newsletter.js"></script>
+</body>
+
+</html>

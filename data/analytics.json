@@ -1,0 +1,42 @@
+[
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [],
+      "hasDisplayName": true,
+      "id": "aefa2c8d-2bde-4a60-929b-480d5b60ef22"
+    },
+    "timestamp": "2026-03-13T14:10:11.797Z"
+  },
+  {
+    "event": "story_viewed",
+    "properties": {
+      "id": "aefa2c8d-2bde-4a60-929b-480d5b60ef22",
+      "title": "Ghost Rider",
+      "location": "London, UK",
+      "tags": []
+    },
+    "timestamp": "2026-03-13T14:10:15.543Z"
+  },
+  {
+    "event": "story_viewed",
+    "properties": {
+      "id": "b83cb7e0-df38-493b-b53d-2616175ea5f9",
+      "title": "The Widow in the Rocking Chair",
+      "location": "Dunwich, UK",
+      "tags": [
+        "haunted_house",
+        "apparition"
+      ]
+    },
+    "timestamp": "2026-03-13T14:19:16.459Z"
+  },
+  {
+    "event": "story_shared",
+    "properties": {
+      "network": "twitter",
+      "id": "b83cb7e0-df38-493b-b53d-2616175ea5f9"
+    },
+    "timestamp": "2026-03-13T14:19:23.869Z"
+  }
+]

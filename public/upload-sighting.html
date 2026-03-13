@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Share your paranormal encounter anonymously on From the Other Side – the internet's living archive of real ghost sightings.">
+  <link rel="stylesheet" href="/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frijole&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Share Your Sighting – From the Other Side</title>
+</head>
+
+<body>
+  <header>
+    <div class="top-header">
+      <img class="logo-img" src="/images/candle-logo.png" alt="site logo">
+      <nav id="main-navigation">
+        <ul role="list">
+          <li role="listitem"><a href="/">Home</a></li>
+          <li role="listitem"><a href="/sightings.html">Read</a></li>
+          <li role="listitem"><a href="/upload-sighting.html">Upload</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-header">
+      <a href="/" class="site-title-page">From the Other Side</a>
+    </div>
+  </header>
+
+  <main class="form-container" aria-labelledby="form-title">
+    <h1 class="form-title" id="form-title">Add Sighting</h1>
+
+    <form id="eventForm">
+      <!-- Title -->
+      <label for="title" class="lab-title">Title:</label>
+      <input type="text" id="title" name="title" placeholder="A ghostly encounter" class="input-title">
+
+      <!-- Details -->
+      <label for="details" class="lab-details">Details:</label>
+      <textarea id="details" name="details" rows="5"
+        placeholder="I was trying to get to sleep when…" class="input-details"></textarea>
+
+      <!-- Time/Date -->
+      <label for="datetime" class="lab-date-time">Time / Date:</label>
+      <input type="datetime-local" id="datetime" name="datetime" class="input-date-time">
+
+      <!-- Location -->
+      <label for="location" class="lab-location">Location:</label>
+      <input type="text" id="location" name="location" placeholder="London, UK" class="input-location">
+
+      <!-- Display name (optional) -->
+      <label for="displayName" class="lab-displayname">Your name (optional):</label>
+      <input type="text" id="displayName" name="displayName"
+        placeholder="Anonymous traveller" class="input-displayname" maxlength="50">
+
+      <!-- Category / tags -->
+      <label class="lab-tags">Category:</label>
+      <div class="tags-checkboxes input-tags" role="group" aria-label="Sighting categories">
+        <label class="tag-check"><input type="checkbox" name="tags" value="apparition"> Apparition</label>
+        <label class="tag-check"><input type="checkbox" name="tags" value="poltergeist"> Poltergeist</label>
+        <label class="tag-check"><input type="checkbox" name="tags" value="shadow_figure"> Shadow Figure</label>
+        <label class="tag-check"><input type="checkbox" name="tags" value="sleep_paralysis"> Sleep Paralysis</label>
+        <label class="tag-check"><input type="checkbox" name="tags" value="haunted_house"> Haunted House</label>
+        <label class="tag-check"><input type="checkbox" name="tags" value="ufo"> UFO</label>
+        <label class="tag-check"><input type="checkbox" name="tags" value="strange_sound"> Strange Sound</label>
+        <label class="tag-check"><input type="checkbox" name="tags" value="premonition"> Premonition</label>
+        <label class="tag-check"><input type="checkbox" name="tags" value="other"> Other</label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit-btn">Submit</button>
+      <div class="form-message">
+        <p class="form-message-text">All sightings will be published on our <a href="./sightings.html">sightings</a> page.</p>
+      </div>
+    </form>
+
+    <!-- ── Success screen (shown after submission) ─────────────── -->
+    <section class="upload-success" id="uploadSuccess" hidden>
+      <h2 class="upload-success-title">Your sighting is live! 👻</h2>
+      <p class="upload-success-subtitle">The spirits have received your account. Now let the world know.</p>
+      <a href="#" class="upload-success-link" id="successStoryLink">Read your story →</a>
+
+      <h3 class="upload-success-share-title">Tell your friends what happened to you</h3>
+      <div class="upload-success-share-buttons" id="successShareButtons">
+        <button type="button" class="share-btn" data-network="native">Share</button>
+        <button type="button" class="share-btn" data-network="twitter">X / Twitter</button>
+        <button type="button" class="share-btn" data-network="reddit">Reddit</button>
+        <button type="button" class="share-btn" data-network="whatsapp">WhatsApp</button>
+        <button type="button" class="share-btn" data-network="copy">Copy link</button>
+      </div>
+      <p class="upload-success-share-helper" id="successShareHelper"></p>
+
+      <p class="upload-success-invite">
+        Know someone who's seen something?
+        <a href="./upload-sighting.html">Invite them to share it here.</a>
+      </p>
+      <a href="./sightings.html" class="upload-success-browse">Browse all sightings &rarr;</a>
+    </section>
+  </main>
+
+  <section class="newsletter-section" aria-label="Newsletter signup">
+    <p class="newsletter-eyebrow">Stay haunted</p>
+    <h2 class="newsletter-title">Get the eeriest new sightings weekly</h2>
+    <form class="newsletter-form">
+      <input type="email" class="newsletter-email" placeholder="your@email.com" aria-label="Email address" required>
+      <button type="submit" class="newsletter-btn">Join</button>
+    </form>
+    <p class="newsletter-msg"></p>
+  </section>
+
+  <footer>
+    <p>&copy; From The Other Side. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="upload-sighting.js"></script>
+  <script src="/newsletter.js"></script>
+</body>
+
+</html>

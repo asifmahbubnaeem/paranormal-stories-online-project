@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A paranormal sighting on From the Other Side.">
+  <!-- OG / Twitter card – values updated dynamically by sighting.js -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="From the Other Side">
+  <meta property="og:title" content="A paranormal sighting – From the Other Side">
+  <meta property="og:description" content="Real, anonymous paranormal encounters from around the world.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@FromTheOtherSide">
+  <link rel="stylesheet" href="/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Frijole&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <title>Sighting – From the Other Side</title>
+</head>
+
+<body>
+  <header>
+    <div class="top-header">
+      <img class="logo-img" src="/images/candle-logo.png" alt="site logo">
+      <nav id="main-navigation">
+        <ul role="list">
+          <li role="listitem"><a href="/">Home</a></li>
+          <li role="listitem"><a href="/sightings.html">Read</a></li>
+          <li role="listitem"><a href="/upload-sighting.html">Upload</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-header">
+      <a href="/" class="site-title-page">From the Other Side</a>
+    </div>
+  </header>
+
+  <main class="sighting-detail" aria-labelledby="sighting-detail-title">
+    <section class="sighting-detail-card">
+
+      <!-- Meta: time + location -->
+      <p class="sighting-detail-meta" id="sighting-detail-meta"></p>
+
+      <!-- Optional author -->
+      <p class="sighting-detail-author" id="sighting-detail-author" hidden></p>
+
+      <!-- Title -->
+      <h1 class="sighting-detail-title" id="sighting-detail-title">Loading…</h1>
+
+      <!-- Tags -->
+      <div class="sighting-detail-tags" id="sighting-detail-tags"></div>
+
+      <!-- Story body -->
+      <article class="sighting-detail-body" id="sighting-detail-body"></article>
+
+      <!-- Reactions (populated by JS) -->
+      <div class="detail-reactions" id="detailReactions"></div>
+
+      <!-- Share -->
+      <div class="sighting-share" aria-label="Share this sighting">
+        <h2 class="sighting-share-title">Share this sighting</h2>
+        <div class="sighting-share-buttons">
+          <button type="button" class="share-btn" data-network="native">Share</button>
+          <button type="button" class="share-btn" data-network="twitter">X / Twitter</button>
+          <button type="button" class="share-btn" data-network="reddit">Reddit</button>
+          <button type="button" class="share-btn" data-network="facebook">Facebook</button>
+          <button type="button" class="share-btn" data-network="whatsapp">WhatsApp</button>
+          <button type="button" class="share-btn" data-network="copy">Copy link</button>
+        </div>
+        <p class="sighting-share-helper" id="sighting-share-helper"></p>
+      </div>
+
+      <!-- Similar sightings CTA (shown by JS if tags exist) -->
+      <div class="similar-cta" id="similarCta" hidden>
+        <p>Experienced something similar?</p>
+        <a href="/upload-sighting.html" id="similarCtaLink">Share your own encounter →</a>
+      </div>
+
+      <!-- Report -->
+      <div class="report-link-wrapper">
+        <button class="report-link" id="reportBtn">Report this story</button>
+      </div>
+
+    </section>
+  </main>
+
+  <section class="newsletter-section" aria-label="Newsletter signup">
+    <p class="newsletter-eyebrow">Stay haunted</p>
+    <h2 class="newsletter-title">Get the eeriest new sightings weekly</h2>
+    <form class="newsletter-form">
+      <input type="email" class="newsletter-email" placeholder="your@email.com" aria-label="Email address" required>
+      <button type="submit" class="newsletter-btn">Join</button>
+    </form>
+    <p class="newsletter-msg"></p>
+  </section>
+
+  <footer>
+    <p>&copy; From The Other Side. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="/sighting.js"></script>
+  <script src="/newsletter.js"></script>
+</body>
+
+</html>
