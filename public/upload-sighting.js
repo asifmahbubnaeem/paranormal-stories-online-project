@@ -66,6 +66,7 @@ form.addEventListener('submit', async function (event) {
     if (response.ok) {
       const saved = await response.json()
       const savedId = saved.id || saved.uuid
+      const isApproved = saved.approved === true
 
       // ── Analytics: story submitted ─────────────────────────
       track('story_submitted', {
@@ -74,9 +75,24 @@ form.addEventListener('submit', async function (event) {
         id: savedId,
       })
 
-      if (savedId) {
+      const successLink = document.getElementById('successStoryLink')
+      const successTitle = document.getElementById('successTitle')
+      const successSubtitle = document.getElementById('successSubtitle')
+      const successPending = document.getElementById('successPending')
+      if (isApproved && savedId) {
         successStoryUrl = `${window.location.origin}/sighting.html?id=${encodeURIComponent(savedId)}`
-        document.getElementById('successStoryLink').href = successStoryUrl
+        successLink.href = successStoryUrl
+        successLink.hidden = false
+        if (successPending) successPending.hidden = true
+        if (successTitle) successTitle.textContent = 'Your sighting is live! 👻'
+        if (successSubtitle) successSubtitle.textContent = 'The spirits have received your account. Now let the world know.'
+      } else {
+        successLink.hidden = true
+        if (successPending) successPending.hidden = false
+        if (successTitle) successTitle.textContent = 'Submitted – awaiting approval 👻'
+        if (successSubtitle) successSubtitle.textContent = 'Your story will be published once an admin approves it. Newsletter subscribers will be notified then.'
+        document.querySelector('.upload-success-share-title')?.style.setProperty('display', 'none')
+        document.getElementById('successShareButtons')?.style.setProperty('display', 'none')
       }
 
       form.style.display = 'none'

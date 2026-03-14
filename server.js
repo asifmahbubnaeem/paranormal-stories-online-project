@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import './loadEnv.js'
 import http from 'node:http'
 import { serveStatic } from './utils/serveStatic.js'
 import { sendResponse } from './utils/sendResponse.js'
@@ -10,6 +10,9 @@ import {
   handleReport,
   handleGetReports,
   handleHide,
+  handleGetPending,
+  handleApproveStory,
+  handleDisapproveStory,
   handleNewsletter,
   handleUnsubscribe,
   handleGetSubscribers,
@@ -21,6 +24,13 @@ import {
 
 const PORT = 8000
 const __dirname = import.meta.dirname
+
+const adminKey = process.env.ADMIN_KEY || 'ghostadmin'
+if (adminKey === 'ghostadmin') {
+  console.warn('Warning: Using default ADMIN_KEY. Set ADMIN_KEY in .env to use a custom key.')
+} else {
+  console.log('Admin key: using custom value from .env')
+}
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`)
@@ -70,6 +80,12 @@ const server = http.createServer(async (req, res) => {
     return handleSitemap(req, res)
   }
 
+  // /api/pending – admin: list stories awaiting approval
+  if (pathname === '/api/pending') {
+    if (req.method === 'GET') return await handleGetPending(req, res)
+    return sendResponse(res, 405, 'application/json', JSON.stringify({ error: 'Method not allowed' }))
+  }
+
   // /api/:id[/:action]
   if (segments[0] === 'api' && segments.length >= 2) {
     const id = segments[1]
@@ -80,6 +96,8 @@ const server = http.createServer(async (req, res) => {
     if (action === 'react' && req.method === 'POST') return handleReact(req, res, id)
     if (action === 'report' && req.method === 'POST') return handleReport(req, res, id)
     if (action === 'hide' && req.method === 'POST') return handleHide(req, res, id)
+    if (action === 'approve' && req.method === 'POST') return await handleApproveStory(req, res, id)
+    if (action === 'disapprove' && req.method === 'POST') return await handleDisapproveStory(req, res, id)
 
     return sendResponse(res, 404, 'application/json', JSON.stringify({ error: 'Not found' }))
   }

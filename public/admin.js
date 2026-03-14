@@ -10,13 +10,147 @@ function esc(str) {
 const key = new URLSearchParams(window.location.search).get('key')
 const content = document.getElementById('adminContent')
 
-if (key !== 'ghostadmin') {
-  content.innerHTML =
-    '<p class="admin-access-msg">Restricted access. Add <code>?key=ghostadmin</code> to the URL.</p>'
-} else {
+async function initAdmin() {
+  if (!key || key.trim() === '') {
+    content.innerHTML =
+      '<p class="admin-access-msg">Restricted access. Add <code>?key=YOUR_ADMIN_KEY</code> to the URL (use the value from your server’s ADMIN_KEY).</p>'
+    return
+  }
+  content.innerHTML = '<p class="admin-access-msg">Checking access…</p>'
+  const res = await fetch(`/api/reports?key=${encodeURIComponent(key)}`)
+  if (res.status === 401) {
+    content.innerHTML =
+      '<p class="admin-access-msg">Invalid key. Access denied. Use the key set in your server’s ADMIN_KEY.</p>'
+    return
+  }
+  loadPendingStories()
   loadReports()
   loadSubscribers()
   renderNotifyPanel()
+}
+
+initAdmin()
+
+async function loadPendingStories() {
+  const section = document.createElement('section')
+  section.className = 'admin-section'
+  section.id = 'pendingSection'
+  section.innerHTML = '<h2 class="admin-section-title">Pending Stories</h2><p class="admin-access-msg">Loading…</p>'
+  const main = document.querySelector('main')
+  main.insertBefore(section, main.firstChild)
+
+  try {
+    const res = await fetch(`/api/pending?key=${encodeURIComponent(key)}`)
+    if (res.status === 401) {
+      section.innerHTML = '<h2 class="admin-section-title">Pending Stories</h2><p class="admin-access-msg">Unauthorized.</p>'
+      return
+    }
+    const pending = await res.json()
+    if (!pending.length) {
+      section.innerHTML = `
+        <h2 class="admin-section-title">Pending Stories</h2>
+        <p class="admin-count">0 pending</p>
+        <p class="admin-access-msg">New submissions will appear here. Approve to publish and notify newsletter subscribers.</p>
+      `
+      return
+    }
+    section.innerHTML = `
+      <h2 class="admin-section-title">Pending Stories</h2>
+      <p class="admin-count">${pending.length} awaiting approval</p>
+      ${pending
+        .map(
+          (s) => `
+        <div class="admin-report-card admin-pending-card" data-id="${esc(s.id)}">
+          <p><strong>${esc(s.title)}</strong></p>
+          <p><strong>Location:</strong> ${esc(s.location)} · <strong>By:</strong> ${esc(s.displayName || 'Anonymous')}</p>
+          <p class="admin-pending-preview">${esc((s.text || '').slice(0, 200))}${(s.text || '').length > 200 ? '…' : ''}</p>
+          <div class="admin-pending-actions">
+            <button type="button" class="admin-btn admin-btn--approve" data-id="${esc(s.id)}">Approve &amp; Notify Subscribers</button>
+            <button type="button" class="admin-btn admin-btn--disapprove" data-id="${esc(s.id)}">Disapprove</button>
+            <a href="/sighting.html?id=${encodeURIComponent(s.id)}" target="_blank" class="admin-preview-link">Preview ↗</a>
+          </div>
+          <p class="admin-pending-status" data-status="${esc(s.id)}"></p>
+        </div>`
+        )
+        .join('')}
+    `
+    section.addEventListener('click', async (e) => {
+      const approveBtn = e.target.closest('.admin-btn--approve')
+      const disapproveBtn = e.target.closest('.admin-btn--disapprove')
+      const card = e.target.closest('.admin-pending-card')
+      if (!card) return
+      const id = card.dataset.id
+      const statusEl = card.querySelector('.admin-pending-status')
+
+      if (approveBtn && !approveBtn.disabled) {
+        approveBtn.disabled = true
+        approveBtn.textContent = 'Approving & sending…'
+        statusEl.textContent = ''
+        try {
+          const res = await fetch(`/api/${encodeURIComponent(id)}/approve?key=${encodeURIComponent(key)}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}),
+          })
+          const data = await res.json()
+          if (data.success) {
+            statusEl.textContent = `Approved. Notified ${data.notification?.sent ?? 0} subscribers.`
+            statusEl.className = 'admin-pending-status admin-pending-status--ok'
+            card.remove()
+            const countEl = section.querySelector('.admin-count')
+            const left = section.querySelectorAll('.admin-pending-card').length
+            if (countEl) countEl.textContent = left ? `${left} awaiting approval` : '0 pending'
+          } else {
+            statusEl.textContent = data.error || 'Failed to approve'
+            statusEl.className = 'admin-pending-status admin-pending-status--error'
+            approveBtn.disabled = false
+            approveBtn.textContent = 'Approve & Notify Subscribers'
+          }
+        } catch (err) {
+          statusEl.textContent = 'Network error. Try again.'
+          statusEl.className = 'admin-pending-status admin-pending-status--error'
+          approveBtn.disabled = false
+          approveBtn.textContent = 'Approve & Notify Subscribers'
+        }
+        return
+      }
+      if (disapproveBtn && !disapproveBtn.disabled) {
+        if (!confirm('Disapprove this story? It will be hidden from the site.')) return
+        disapproveBtn.disabled = true
+        disapproveBtn.textContent = 'Disapproving…'
+        statusEl.textContent = ''
+        try {
+          const res = await fetch(`/api/${encodeURIComponent(id)}/disapprove?key=${encodeURIComponent(key)}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}),
+          })
+          const data = await res.json()
+          if (data.success) {
+            statusEl.textContent = 'Disapproved (hidden).'
+            statusEl.className = 'admin-pending-status admin-pending-status--warn'
+            card.remove()
+            const countEl = section.querySelector('.admin-count')
+            const left = section.querySelectorAll('.admin-pending-card').length
+            if (countEl) countEl.textContent = left ? `${left} awaiting approval` : '0 pending'
+          } else {
+            statusEl.textContent = data.error || 'Failed'
+            statusEl.className = 'admin-pending-status admin-pending-status--error'
+            disapproveBtn.disabled = false
+            disapproveBtn.textContent = 'Disapprove'
+          }
+        } catch (err) {
+          statusEl.textContent = 'Network error. Try again.'
+          statusEl.className = 'admin-pending-status admin-pending-status--error'
+          disapproveBtn.disabled = false
+          disapproveBtn.textContent = 'Disapprove'
+        }
+      }
+    })
+  } catch (err) {
+    section.innerHTML = '<h2 class="admin-section-title">Pending Stories</h2><p class="admin-access-msg">Error loading pending stories.</p>'
+    console.error(err)
+  }
 }
 
 function renderNotifyPanel() {

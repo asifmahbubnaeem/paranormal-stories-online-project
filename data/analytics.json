@@ -247,5 +247,82 @@
       ]
     },
     "timestamp": "2026-03-14T16:04:42.624Z"
+  },
+  {
+    "event": "story_viewed",
+    "properties": {
+      "id": "a9f1c6e5-9383-4d12-b28d-734c9370f861",
+      "title": "The Phantom Warning",
+      "location": "Exeter, UK",
+      "tags": [
+        "apparition",
+        "premonition"
+      ]
+    },
+    "timestamp": "2026-03-14T16:19:20.610Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "poltergeist",
+        "premonition"
+      ],
+      "hasDisplayName": true,
+      "id": "d0211083-f335-401c-a639-7cee22e81e7a"
+    },
+    "timestamp": "2026-03-14T16:50:01.390Z"
+  },
+  {
+    "event": "story_viewed",
+    "properties": {
+      "id": "d0211083-f335-401c-a639-7cee22e81e7a",
+      "title": "test story",
+      "location": "mn, bd",
+      "tags": [
+        "poltergeist",
+        "premonition"
+      ]
+    },
+    "timestamp": "2026-03-14T16:50:58.927Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "sleep_paralysis",
+        "other"
+      ],
+      "hasDisplayName": true,
+      "id": "ef7aeb55-d564-4bbb-9562-050770ffc5b1"
+    },
+    "timestamp": "2026-03-14T17:14:47.687Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "poltergeist",
+        "strange_sound",
+        "other"
+      ],
+      "hasDisplayName": true,
+      "id": "68889ea9-a821-42d6-a0c5-57ec22341234"
+    },
+    "timestamp": "2026-03-14T17:17:40.555Z"
+  },
+  {
+    "event": "story_viewed",
+    "properties": {
+      "id": "68889ea9-a821-42d6-a0c5-57ec22341234",
+      "title": "The Echoes of Werwolf",
+      "location": "Vinnytsia (Stryzhavka), Ukraine",
+      "tags": [
+        "poltergeist",
+        "strange_sound",
+        "other"
+      ]
+    },
+    "timestamp": "2026-03-14T17:18:33.343Z"
   }
 ]

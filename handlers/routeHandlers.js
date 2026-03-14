@@ -4,9 +4,11 @@ import { sanitizeInput } from '../utils/sanitizeInput.js'
 import {
   getAllStories,
   getStoryById,
+  getPendingStories,
   insertStory,
   incrementReaction,
   setHidden,
+  setApproved,
   insertReport,
   getAllReports,
 } from '../db/sqlite.js'
@@ -50,13 +52,13 @@ async function writeJSON(filePath, data) {
 // ─── Sightings ──────────────────────────────────────────────────
 
 export async function handleGet(res) {
-  const stories = getAllStories().filter((s) => !s.hidden)
+  const stories = getAllStories()
   sendResponse(res, 200, 'application/json', JSON.stringify(stories))
 }
 
 export async function handleGetById(res, id) {
   const story = getStoryById(id)
-  if (!story || story.hidden) {
+  if (!story) {
     sendResponse(res, 404, 'application/json', JSON.stringify({ error: 'Sighting not found' }))
     return
   }
@@ -68,12 +70,9 @@ export async function handlePost(req, res) {
     const parsedBody   = await parseJSONBody(req)
     const sanitized    = sanitizeInput(parsedBody)
     const id           = sanitized.id || sanitized.uuid || randomUUID()
+    // New stories are saved as pending; no email until admin approves
     const saved        = insertStory({ ...sanitized, id })
-    // Respond to the client immediately; email broadcast runs in the background
     sendResponse(res, 201, 'application/json', JSON.stringify(saved))
-    broadcastStoryToSubscribers({ title: saved.title, storyId: saved.id }).catch((err) =>
-      console.error('[newsletter] broadcast error:', err?.message || err)
-    )
   } catch (err) {
     sendResponse(res, 400, 'application/json', JSON.stringify({ error: err?.message || String(err) }))
   }
@@ -137,6 +136,62 @@ export async function handleHide(req, res, id) {
       return
     }
     sendResponse(res, 200, 'application/json', JSON.stringify({ success: true, hidden: shouldHide }))
+  } catch (err) {
+    sendResponse(res, 400, 'application/json', JSON.stringify({ error: err?.message || String(err) }))
+  }
+}
+
+// ─── Pending stories (admin) ──────────────────────────────────────
+
+export async function handleGetPending(req, res) {
+  if (!isAdminAuthorized(req)) {
+    sendResponse(res, 401, 'application/json', JSON.stringify({ error: 'Unauthorized' }))
+    return
+  }
+  const pending = getPendingStories()
+  sendResponse(res, 200, 'application/json', JSON.stringify(pending))
+}
+
+export async function handleApproveStory(req, res, id) {
+  if (!isAdminAuthorized(req)) {
+    sendResponse(res, 401, 'application/json', JSON.stringify({ error: 'Unauthorized' }))
+    return
+  }
+  try {
+    const story = getStoryById(id, true)
+    if (!story) {
+      sendResponse(res, 404, 'application/json', JSON.stringify({ error: 'Sighting not found' }))
+      return
+    }
+    const updated = setApproved(id, true)
+    if (!updated) {
+      sendResponse(res, 500, 'application/json', JSON.stringify({ error: 'Failed to approve' }))
+      return
+    }
+    // Notify newsletter subscribers (data/newsletter.json) only for approved stories
+    const result = await broadcastStoryToSubscribers({ title: updated.title, storyId: updated.id })
+    sendResponse(res, 200, 'application/json', JSON.stringify({
+      success: true,
+      approved: true,
+      notification: { sent: result.sent, failed: result.failed },
+    }))
+  } catch (err) {
+    sendResponse(res, 500, 'application/json', JSON.stringify({ error: err?.message || String(err) }))
+  }
+}
+
+export async function handleDisapproveStory(req, res, id) {
+  if (!isAdminAuthorized(req)) {
+    sendResponse(res, 401, 'application/json', JSON.stringify({ error: 'Unauthorized' }))
+    return
+  }
+  try {
+    const updated = setHidden(id, true)
+    if (!updated) {
+      sendResponse(res, 404, 'application/json', JSON.stringify({ error: 'Sighting not found' }))
+      return
+    }
+    sendResponse(res, 200, 'application/json', JSON.stringify({ success: true, disapproved: true }))
   } catch (err) {
     sendResponse(res, 400, 'application/json', JSON.stringify({ error: err?.message || String(err) }))
   }

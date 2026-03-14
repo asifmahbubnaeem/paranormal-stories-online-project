@@ -1420,6 +1420,38 @@ main.admin-page {
     vertical-align: middle;
 }
 
+.admin-pending-card .admin-pending-preview {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    margin: 0.5em 0;
+}
+.admin-pending-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.75em;
+}
+.admin-pending-actions .admin-btn { margin-right: 0; }
+.admin-btn--approve {
+    background: #27ae60;
+    color: white;
+}
+.admin-btn--approve:hover:not(:disabled) {
+    background: #219a52;
+}
+.admin-btn--disapprove {
+    background: #95a5a6;
+    color: white;
+}
+.admin-btn--disapprove:hover:not(:disabled) {
+    background: #7f8c8d;
+}
+.admin-pending-status { font-size: 0.85rem; margin-top: 0.35em; }
+.admin-pending-status--ok { color: #27ae60; }
+.admin-pending-status--warn { color: #f39c12; }
+.admin-pending-status--error { color: #e74c3c; }
+
 /* ============================== */
 /*    NEWSLETTER CONSENT TEXT     */
 /* ============================== */
