@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frijole&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Unsubscribe – From the Other Side</title>
+</head>
+
+<body>
+  <header>
+    <div class="top-header">
+      <nav id="main-navigation">
+        <ul role="list">
+          <li role="listitem"><a href="/">Home</a></li>
+          <li role="listitem"><a href="/sightings.html">Read</a></li>
+          <li role="listitem"><a href="/upload-sighting.html">Upload</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-header">
+      <a href="/" class="site-title">From the Other Side</a>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="hero-content" style="text-align:center; max-width: 480px; margin: 0 auto;">
+      <h1 class="hero-title" id="unsub-title">Unsubscribing…</h1>
+      <p id="unsub-msg" style="margin-top: 1rem;"></p>
+      <a href="/" class="cta-btn cta-btn--secondary" id="unsub-home" style="display:none; margin-top: 2rem;">Back to Home</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; From The Other Side. All rights reserved.</p>
+  </footer>
+
+  <script>
+    (async function () {
+      const params = new URLSearchParams(window.location.search)
+      const token  = params.get('token')
+      const title  = document.getElementById('unsub-title')
+      const msg    = document.getElementById('unsub-msg')
+      const home   = document.getElementById('unsub-home')
+
+      function done(headline, body) {
+        title.textContent = headline
+        msg.textContent   = body
+        home.style.display = 'inline-block'
+      }
+
+      if (!token) {
+        done('Invalid link', 'This unsubscribe link is missing a token. Please use the link from your email.')
+        return
+      }
+
+      try {
+        const res  = await fetch(`/newsletter/unsubscribe?token=${encodeURIComponent(token)}`)
+        const data = await res.json()
+
+        if (data.success) {
+          done('You\'re unsubscribed', 'You\'ve been removed from the haunted mailing list. You won\'t receive any further newsletters.')
+        } else if (data.already) {
+          done('Already unsubscribed', 'This email is no longer on our list.')
+        } else {
+          done('Something went wrong', data.error || 'Please try again or contact us.')
+        }
+      } catch {
+        done('Connection error', 'Could not reach the server. Please try again shortly.')
+      }
+    })()
+  </script>
+</body>
+
+</html>

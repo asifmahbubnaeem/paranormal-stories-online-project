@@ -102,6 +102,9 @@ async function loadSighting() {
 
     // Similar CTA
     renderSimilarCta(sighting.tags)
+
+    // Listen to story (TTS): show toolbar if supported and we have text
+    initListenToStory(sighting)
   } catch (err) {
     console.error(err)
     document.getElementById('sighting-detail-title').textContent = 'Something went wrong'
@@ -109,6 +112,165 @@ async function loadSighting() {
       'The spirits in the server room are restless. Please try again.'
   }
 }
+
+// ── Listen to story (Text-to-Speech) ───────────────────────────
+const ListenState = { idle: 'idle', playing: 'playing', paused: 'paused' }
+let listenState = ListenState.idle
+
+function getTextToSpeak(sighting) {
+  if (!sighting?.text) return ''
+  const title = (sighting.title || '').trim()
+  const body = (sighting.text || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+  return title ? `${title}. ${body}` : body
+}
+
+function setListenStatus(msg) {
+  const el = document.getElementById('listenStatus')
+  if (el) el.textContent = msg
+}
+
+function setListenUI(state) {
+  const playBtn = document.getElementById('listenPlayBtn')
+  const pauseBtn = document.getElementById('listenPauseBtn')
+  const stopBtn = document.getElementById('listenStopBtn')
+  if (!playBtn || !pauseBtn || !stopBtn) return
+
+  playBtn.hidden = state === ListenState.playing && !window.speechSynthesis?.paused
+  pauseBtn.hidden = state !== ListenState.playing || window.speechSynthesis?.paused
+  stopBtn.hidden = state === ListenState.idle
+}
+
+function getListenSpeed() {
+  const sel = document.getElementById('listenSpeed')
+  return sel ? parseFloat(sel.value) || 1 : 1
+}
+
+function getVoices() {
+  return window.speechSynthesis?.getVoices() ?? []
+}
+
+function populateVoiceSelect() {
+  const sel = document.getElementById('listenVoice')
+  if (!sel) return
+  const currentValue = sel.value
+  const voices = getVoices()
+  sel.innerHTML = '<option value="">Default</option>'
+  voices.forEach((voice) => {
+    const opt = document.createElement('option')
+    opt.value = voice.name
+    opt.textContent = voice.name + (voice.lang ? ` (${voice.lang})` : '')
+    sel.appendChild(opt)
+  })
+  if (currentValue && voices.some((v) => v.name === currentValue)) {
+    sel.value = currentValue
+  }
+}
+
+function getSelectedVoice() {
+  const sel = document.getElementById('listenVoice')
+  if (!sel?.value) return null
+  return getVoices().find((v) => v.name === sel.value) ?? null
+}
+
+function speakStory() {
+  if (!currentSighting || !window.speechSynthesis) return
+  const text = getTextToSpeak(currentSighting)
+  if (!text) {
+    setListenStatus('Nothing to read.')
+    return
+  }
+
+  window.speechSynthesis.cancel()
+  const u = new SpeechSynthesisUtterance(text)
+  u.rate = getListenSpeed()
+  u.lang = 'en-US'
+  const voice = getSelectedVoice()
+  if (voice) u.voice = voice
+
+  u.onstart = () => {
+    listenState = ListenState.playing
+    setListenUI(listenState)
+    setListenStatus('Playing…')
+  }
+  u.onend = u.onerror = () => {
+    listenState = ListenState.idle
+    setListenUI(listenState)
+    setListenStatus('')
+  }
+  u.onpause = () => {
+    listenState = ListenState.paused
+    setListenUI(listenState)
+    setListenStatus('Paused.')
+  }
+  u.onresume = () => {
+    listenState = ListenState.playing
+    setListenUI(listenState)
+    setListenStatus('Playing…')
+  }
+
+  window.speechSynthesis.speak(u)
+  listenState = ListenState.playing
+  setListenUI(listenState)
+  setListenStatus('Playing…')
+}
+
+function initListenToStory(sighting) {
+  const container = document.getElementById('listenStory')
+  if (!container) return
+  if (!window.speechSynthesis || !getTextToSpeak(sighting)) {
+    container.hidden = true
+    return
+  }
+
+  container.hidden = false
+  setListenStatus('')
+  listenState = ListenState.idle
+  setListenUI(listenState)
+
+  populateVoiceSelect()
+  if (window.speechSynthesis && !getVoices().length) {
+    window.speechSynthesis.onvoiceschanged = () => populateVoiceSelect()
+  }
+
+  const playBtn = document.getElementById('listenPlayBtn')
+  const pauseBtn = document.getElementById('listenPauseBtn')
+  const stopBtn = document.getElementById('listenStopBtn')
+  const speedEl = document.getElementById('listenSpeed')
+  const voiceEl = document.getElementById('listenVoice')
+
+  playBtn?.addEventListener('click', () => {
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume()
+    } else {
+      speakStory()
+    }
+  })
+  pauseBtn?.addEventListener('click', () => {
+    if (listenState === ListenState.playing) window.speechSynthesis.pause()
+  })
+  stopBtn?.addEventListener('click', () => {
+    window.speechSynthesis.cancel()
+    listenState = ListenState.idle
+    setListenUI(listenState)
+    setListenStatus('')
+  })
+  speedEl?.addEventListener('change', () => {
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.cancel()
+      speakStory()
+    }
+  })
+  voiceEl?.addEventListener('change', () => {
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.cancel()
+      speakStory()
+    }
+  })
+}
+
+window.addEventListener('beforeunload', () => {
+  if (window.speechSynthesis) window.speechSynthesis.cancel()
+})
 
 // ── Reactions ─────────────────────────────────────────────────
 function renderDetailReactions(reactions, sightingId) {

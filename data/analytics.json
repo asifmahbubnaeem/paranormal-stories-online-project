@@ -50,5 +50,202 @@
       "id": "b715a76a-46f2-423f-af74-5d7b92b332af"
     },
     "timestamp": "2026-03-13T20:16:34.943Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "shadow_figure",
+        "strange_sound"
+      ],
+      "hasDisplayName": true,
+      "id": "5a70c46c-6443-46c8-bbae-d0014bacefe9"
+    },
+    "timestamp": "2026-03-14T14:24:33.829Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "apparition",
+        "poltergeist",
+        "other"
+      ],
+      "hasDisplayName": true,
+      "id": "85e74d33-033e-49eb-9e50-dcda7a406552"
+    },
+    "timestamp": "2026-03-14T14:36:52.939Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "poltergeist",
+        "ufo"
+      ],
+      "hasDisplayName": true,
+      "id": "5765fea2-56b4-408e-80ac-67d6c905d938"
+    },
+    "timestamp": "2026-03-14T14:45:33.020Z"
+  },
+  {
+    "event": "newsletter_signed_up",
+    "properties": {},
+    "timestamp": "2026-03-14T14:48:22.851Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "poltergeist",
+        "shadow_figure",
+        "premonition",
+        "other"
+      ],
+      "hasDisplayName": true,
+      "id": "eba98682-df7b-4fc5-bdca-ad9575862972"
+    },
+    "timestamp": "2026-03-14T14:50:03.865Z"
+  },
+  {
+    "event": "story_viewed",
+    "properties": {
+      "id": "eba98682-df7b-4fc5-bdca-ad9575862972",
+      "title": "The Whispering Third Rail",
+      "location": "Kyiv, Ukraine",
+      "tags": [
+        "poltergeist",
+        "shadow_figure",
+        "premonition",
+        "other"
+      ]
+    },
+    "timestamp": "2026-03-14T14:50:27.507Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [],
+      "hasDisplayName": true,
+      "id": "7a9e00cf-3fe0-47d0-92cd-71b2fe5f82e1"
+    },
+    "timestamp": "2026-03-14T14:52:47.882Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "shadow_figure",
+        "haunted_house"
+      ],
+      "hasDisplayName": true,
+      "id": "0df3a5f2-4adc-4090-83bc-787f9d183739"
+    },
+    "timestamp": "2026-03-14T15:09:29.332Z"
+  },
+  {
+    "event": "newsletter_signed_up",
+    "properties": {},
+    "timestamp": "2026-03-14T15:14:54.873Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "shadow_figure",
+        "sleep_paralysis"
+      ],
+      "hasDisplayName": true,
+      "id": "ce6dcde5-eccf-4562-8c9a-a62ef5d995dc"
+    },
+    "timestamp": "2026-03-14T15:16:10.942Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "poltergeist",
+        "sleep_paralysis",
+        "other"
+      ],
+      "hasDisplayName": true,
+      "id": "bf82bb34-1271-44c9-bf41-451aed5fa7b0"
+    },
+    "timestamp": "2026-03-14T15:19:38.350Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "strange_sound",
+        "premonition"
+      ],
+      "hasDisplayName": true,
+      "id": "b1d9b2f6-31c9-45f4-bafa-b201818ab584"
+    },
+    "timestamp": "2026-03-14T15:21:06.939Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "shadow_figure",
+        "sleep_paralysis",
+        "ufo"
+      ],
+      "hasDisplayName": true,
+      "id": "472fe195-9dcf-48e1-a744-bcce45a4be95"
+    },
+    "timestamp": "2026-03-14T15:25:51.758Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [],
+      "hasDisplayName": true,
+      "id": "448e4191-fe9f-4efe-b980-a268177ab90a"
+    },
+    "timestamp": "2026-03-14T15:28:46.994Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "sleep_paralysis",
+        "ufo"
+      ],
+      "hasDisplayName": true,
+      "id": "af2b2dc7-9116-4daf-a746-a943ab56a38f"
+    },
+    "timestamp": "2026-03-14T15:55:13.388Z"
+  },
+  {
+    "event": "newsletter_signed_up",
+    "properties": {},
+    "timestamp": "2026-03-14T15:55:39.469Z"
+  },
+  {
+    "event": "story_submitted",
+    "properties": {
+      "tags": [
+        "other"
+      ],
+      "hasDisplayName": true,
+      "id": "07ee757f-5c1e-4063-b07f-3297ea840e2c"
+    },
+    "timestamp": "2026-03-14T15:55:57.990Z"
+  },
+  {
+    "event": "story_viewed",
+    "properties": {
+      "id": "b715a76a-46f2-423f-af74-5d7b92b332af",
+      "title": "The Whispering Wardrobe of Lychakiv",
+      "location": "Lychakiv, Ukraine",
+      "tags": [
+        "haunted_house",
+        "strange_sound"
+      ]
+    },
+    "timestamp": "2026-03-14T16:04:42.624Z"
   }
 ]

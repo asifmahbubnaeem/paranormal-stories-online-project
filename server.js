@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import http from 'node:http'
 import { serveStatic } from './utils/serveStatic.js'
 import { sendResponse } from './utils/sendResponse.js'
@@ -10,6 +11,9 @@ import {
   handleGetReports,
   handleHide,
   handleNewsletter,
+  handleUnsubscribe,
+  handleGetSubscribers,
+  handleNotifySubscribers,
   handleAnalytics,
   handleGetAnalytics,
   handleSitemap,
@@ -33,6 +37,24 @@ const server = http.createServer(async (req, res) => {
   // /newsletter
   if (pathname === '/newsletter') {
     if (req.method === 'POST') return handleNewsletter(req, res)
+    return sendResponse(res, 405, 'application/json', JSON.stringify({ error: 'Method not allowed' }))
+  }
+
+  // /newsletter/unsubscribe  – one-click unsubscribe via token
+  if (pathname === '/newsletter/unsubscribe') {
+    if (req.method === 'GET') return handleUnsubscribe(req, res)
+    return sendResponse(res, 405, 'application/json', JSON.stringify({ error: 'Method not allowed' }))
+  }
+
+  // /newsletter/subscribers  – admin-only list
+  if (pathname === '/newsletter/subscribers') {
+    if (req.method === 'GET') return handleGetSubscribers(req, res)
+    return sendResponse(res, 405, 'application/json', JSON.stringify({ error: 'Method not allowed' }))
+  }
+
+  // /newsletter/notify  – admin-only: email all active subscribers about a new story
+  if (pathname === '/newsletter/notify') {
+    if (req.method === 'POST') return handleNotifySubscribers(req, res)
     return sendResponse(res, 405, 'application/json', JSON.stringify({ error: 'Method not allowed' }))
   }
 

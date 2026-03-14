@@ -769,6 +769,77 @@ main.sighting-detail {
     margin-bottom: 1.5em;
 }
 
+/* ─── Listen to story (TTS) ─────────────────────────────────── */
+
+.listen-story {
+    margin-bottom: 1.25em;
+    padding: 0.85em 1em;
+    background: #f0f4f8;
+    border: 1px solid #e0e6ed;
+    border-radius: 10px;
+}
+
+.listen-story-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.listen-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    padding: 0.5em 0.85em;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0357aa;
+    background: #fff;
+    border: 2px solid #0357aa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.listen-btn:hover {
+    background: #0357aa;
+    color: #fff;
+}
+
+.listen-btn-icon {
+    font-size: 0.85em;
+}
+
+.listen-speed-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.listen-speed {
+    padding: 0.35em 0.5em;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.listen-voice {
+    min-width: 10rem;
+    max-width: 18rem;
+}
+
+.listen-story-status {
+    margin: 0.5em 0 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
 /* ─── Reactions on detail page ──────────────────────────────── */
 
 .detail-reactions {
@@ -1348,6 +1419,164 @@ main.admin-page {
     color: deepskyblue;
     vertical-align: middle;
 }
+
+/* ============================== */
+/*    NEWSLETTER CONSENT TEXT     */
+/* ============================== */
+
+.newsletter-consent {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.38);
+    font-family: 'Poppins', sans-serif;
+    margin-top: 0.5em;
+    letter-spacing: 0.02em;
+}
+
+/* ============================== */
+/*  ADMIN NEWSLETTER SECTION      */
+/* ============================== */
+
+.admin-section {
+    width: 100%;
+    max-width: 720px;
+    margin-top: 2rem;
+}
+
+.admin-section-title {
+    font-family: 'Frijole', serif;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: #fff;
+    text-align: center;
+    margin-bottom: 0.75em;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    margin-top: 0.5em;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 0.5em 0.75em;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-table th {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+
+.admin-unsub-details {
+    margin-top: 1em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.admin-unsub-details summary {
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 0.3em 0;
+    list-style: none;
+}
+
+.admin-unsub-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.admin-unsub-details summary::before {
+    content: '▸ ';
+}
+
+.admin-unsub-details[open] summary::before {
+    content: '▾ ';
+}
+
+/* ============================== */
+/*  ADMIN NOTIFY PANEL            */
+/* ============================== */
+
+.admin-notify-hint {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.admin-notify-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.admin-notify-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
+    max-width: 660px;
+}
+
+.admin-notify-input {
+    flex: 1 1 180px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.55em 0.9em;
+    height: auto;
+    width: auto;
+    margin-top: 0;
+}
+
+.admin-notify-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.admin-btn--load {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f9f9f9;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    white-space: nowrap;
+}
+
+.admin-btn--load:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.admin-btn--send {
+    background: deepskyblue;
+    color: #111;
+    font-weight: 600;
+    min-width: 180px;
+}
+
+.admin-btn--send:hover:not(:disabled) {
+    background: #00aadd;
+}
+
+.admin-notify-status {
+    font-size: 0.82rem;
+    font-family: 'Poppins', sans-serif;
+    min-height: 1.2em;
+    text-align: center;
+}
+
+.admin-notify-status--ok    { color: #2ecc71; }
+.admin-notify-status--warn  { color: #f39c12; }
+.admin-notify-status--error { color: #e74c3c; }
 
 /* ============================== */
 /*       RESPONSIVE TWEAKS        */

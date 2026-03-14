@@ -1,4 +1,16 @@
 [
-  "asifnaim012@gmail.com",
-  "asifnaim01@gmail.com"
+  {
+    "email": "asifnaim012@gmail.com",
+    "created_at": "2026-03-14T00:00:00.000Z",
+    "unsubscribed_at": null,
+    "source": "landing-page",
+    "token": "f76a3a38-8756-405f-ac09-50b926ffb972"
+  },
+  {
+    "email": "authenticfoodbd@gmail.com",
+    "created_at": "2026-03-14T15:14:54.863Z",
+    "unsubscribed_at": null,
+    "source": "landing-page",
+    "token": "05944596-5f05-4080-968e-67a95e90f594"
+  }
 ]
